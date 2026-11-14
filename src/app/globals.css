@@ -1,0 +1,165 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+/*
+ * Identidade: o logotipo e a fachada da Suprema usam preto/grafite, branco e
+ * um verde médio (amostrado do logo: ~#00A862). O site segue essa base:
+ * superfícies escuras como a fachada, superfícies claras como a placa e as
+ * paredes brancas, e o verde só como destaque.
+ */
+
+@theme {
+  --color-grafite: #101214;
+  --color-chumbo: #1b1e21;
+  --color-placa: #24282c;
+  --color-aco: #3a3f44;
+  --color-cinza: #a7adb0;
+  --color-branco: #f7f7f5;
+  --color-cal: #f1f2ee;
+  --color-tinta: #15181a;
+
+  /* verde da marca: fundo de botões e traços */
+  --color-verde: #14a866;
+  /* verde mais claro para texto e linhas finas sobre fundo escuro (contraste 8,9:1) */
+  --color-verde-vivo: #2fcb84;
+  /* verde mais escuro para texto sobre fundo claro (contraste 4,8:1) */
+  --color-verde-fundo: #0b7a49;
+
+  --font-display: var(--font-barlow-condensed), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+
+  --ease-suave: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-heading: var(--font-display);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+}
+
+/* tokens do shadcn/ui apontando para a paleta da Suprema (site escuro) */
+:root {
+  --background: #101214;
+  --foreground: #f7f7f5;
+  --card: #24282c;
+  --card-foreground: #f7f7f5;
+  --popover: #1b1e21;
+  --popover-foreground: #f7f7f5;
+  --primary: #14a866;
+  --primary-foreground: #101214;
+  --secondary: #24282c;
+  --secondary-foreground: #f7f7f5;
+  --muted: #1b1e21;
+  --muted-foreground: #a7adb0;
+  --accent: #24282c;
+  --accent-foreground: #f7f7f5;
+  --destructive: #e5484d;
+  --border: rgb(255 255 255 / 0.1);
+  --input: rgb(255 255 255 / 0.15);
+  --ring: #2fcb84;
+  --radius: 0.375rem;
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply bg-grafite font-sans text-branco antialiased;
+    scroll-padding-top: 4.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-grafite text-branco;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    @apply bg-verde text-grafite;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-verde-vivo);
+    outline-offset: 3px;
+  }
+  .superficie-clara :focus-visible {
+    outline-color: var(--color-verde-fundo);
+  }
+}
+
+/*
+ * Títulos: Barlow Condensed em itálico, inclinados para frente como a
+ * palavra "Suprema" no logotipo da academia.
+ */
+@utility titulo-display {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+
+@utility titulo-secao {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+  font-size: clamp(2.75rem, 7.2vw, 5.75rem);
+}
+
+@utility texto-corrido {
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+/* indicador de rolagem do hero */
+@keyframes descer {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(200%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

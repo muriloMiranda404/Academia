@@ -1,0 +1,13 @@
+import type { MetadataRoute } from "next";
+import { site } from "@/data/site";
+
+export default function robots(): MetadataRoute.Robots {
+  // Prévia não oficial: nada é indexado até a publicação aprovada
+  if (site.isPreview) {
+    return { rules: { userAgent: "*", disallow: "/" } };
+  }
+  return {
+    rules: { userAgent: "*", allow: "/" },
+    sitemap: `${site.url}/sitemap.xml`,
+  };
+}
